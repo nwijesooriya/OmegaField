@@ -1,0 +1,17 @@
+backend/node_modules/
+backend/.env
+backend/.env.*
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/build/
+frontend/coverage/
+frontend/.vercel/
+frontend/*.log
+frontend/*.tsbuildinfo
+backend/*.log
+backend/dist/
+backend/build/
+.DS_Store
+.vscode/
+.idea/
