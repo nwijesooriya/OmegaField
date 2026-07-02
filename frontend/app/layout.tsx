@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "OmegaField",
-  description: "Production-ready foundation for the OmegaField platform.",
+  title: "OmegaField Sports News",
+  description: "A modern sports news portal powered by mock backend data.",
 };
 
 export default function RootLayout({
