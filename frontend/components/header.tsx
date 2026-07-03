@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Container } from "./container";
 
 function SearchIcon() {
@@ -40,18 +41,18 @@ export function Header() {
           >
             <SearchIcon />
           </button>
-          <button
-            type="button"
+          <Link
+            href="/login"
             className="hidden rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 sm:inline-flex"
           >
             Login
-          </button>
-          <button
-            type="button"
+          </Link>
+          <Link
+            href="/signup"
             className="rounded-full bg-slate-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
           >
             Register
-          </button>
+          </Link>
         </div>
       </Container>
     </header>
