@@ -4,11 +4,11 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Mail } from "lucide-react";
-import { AuthLayout } from "../../../components/auth/AuthLayout";
-import { AuthCard } from "../../../components/auth/AuthCard";
-import { InputField } from "../../../components/auth/InputField";
-import { PasswordField } from "../../../components/auth/PasswordField";
-import { PrimaryButton } from "../../../components/auth/PrimaryButton";
+import { AuthLayout } from "../../components/auth/AuthLayout";
+import { AuthCard } from "../../components/auth/AuthCard";
+import { InputField } from "../../components/auth/InputField";
+import { PasswordField } from "../../components/auth/PasswordField";
+import { PrimaryButton } from "../../components/auth/PrimaryButton";
 
 export default function LoginPage() {
   const router = useRouter();
