@@ -9,16 +9,18 @@ import { AuthCard } from "../../components/auth/AuthCard";
 import { InputField } from "../../components/auth/InputField";
 import { PasswordField } from "../../components/auth/PasswordField";
 import { PrimaryButton } from "../../components/auth/PrimaryButton";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setSuccess(false);
@@ -30,19 +32,19 @@ export default function LoginPage() {
 
     setLoading(true);
 
-    // Simulate authentication process purely in React state
-    setTimeout(() => {
+    try {
+      await login({ email, password });
+      setSuccess(true);
+      setTimeout(() => {
+        router.push("/profile");
+      }, 500);
+    } catch (err: any) {
+      const message =
+        err?.response?.data?.error || "Invalid email or password.";
+      setError(message);
+    } finally {
       setLoading(false);
-      if (email === "test@example.com" && password === "Test1234") {
-        setSuccess(true);
-        // Simulate redirect to home/profile
-        setTimeout(() => {
-          router.push("/profile");
-        }, 1000);
-      } else {
-        setError("Invalid email or password. Hint: test@example.com / Test1234");
-      }
-    }, 1000);
+    }
   };
 
   return (
@@ -66,7 +68,7 @@ export default function LoginPage() {
         
         {success && (
           <div className="mb-6 bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg animate-fade-in">
-            <p className="text-sm font-medium text-green-700">Successfully logged in! (Simulation)</p>
+            <p className="text-sm font-medium text-green-700">Successfully logged in! Redirecting...</p>
           </div>
         )}
 

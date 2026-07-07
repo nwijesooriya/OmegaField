@@ -78,6 +78,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
     const payload = {
       id: user.id,
+      username: user.username,
       email: user.email,
       role: user.role,
     };
