@@ -10,8 +10,11 @@ import { InputField } from "../../components/auth/InputField";
 import { PasswordField } from "../../components/auth/PasswordField";
 import { PrimaryButton } from "../../components/auth/PrimaryButton";
 
+import { useAuth } from "../../hooks/useAuth";
+
 export default function SignupPage() {
   const router = useRouter();
+  const { signup } = useAuth();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -39,7 +42,7 @@ export default function SignupPage() {
   const hasNumber = /[0-9]/.test(formData.password);
   const passwordsMatch = formData.password === formData.confirmPassword && formData.password !== "";
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setGlobalError("");
     setSuccess(false);
@@ -68,15 +71,24 @@ export default function SignupPage() {
 
     setLoading(true);
 
-    // Simulate authentication process purely in React state
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      await signup({
+        username: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+        confirmPassword: formData.confirmPassword,
+      });
       setSuccess(true);
-      // Simulate redirect to login page
       setTimeout(() => {
         router.push("/login");
       }, 1000);
-    }, 1500);
+    } catch (err: any) {
+      const message =
+        err?.response?.data?.error || "Registration failed. Please try again.";
+      setGlobalError(message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -102,7 +114,7 @@ export default function SignupPage() {
 
         {success && (
           <div className="mb-6 bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg animate-fade-in">
-            <p className="text-sm font-medium text-green-700">Account created successfully! (Simulation)</p>
+            <p className="text-sm font-medium text-green-700">Account created successfully! Redirecting to login...</p>
           </div>
         )}
 
