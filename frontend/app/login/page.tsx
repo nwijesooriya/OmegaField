@@ -54,7 +54,7 @@ export default function LoginPage() {
         subtitle={
           <>
             Don't have an account?{" "}
-            <Link href="/signup" className="font-semibold text-blue-600 hover:text-blue-500 transition-colors">
+            <Link href="/register" className="font-semibold text-blue-600 hover:text-blue-500 transition-colors">
               Register
             </Link>
           </>
