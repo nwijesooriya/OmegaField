@@ -9,12 +9,25 @@ function createMockImage(title: string, from: string, to: string): string {
           <stop offset="100%" stop-color="${to}" />
         </linearGradient>
       </defs>
-      <rect width="1200" height="800" fill="url(#bg)" rx="40" />
-      <circle cx="990" cy="170" r="120" fill="rgba(255,255,255,0.14)" />
-      <circle cx="230" cy="600" r="200" fill="rgba(255,255,255,0.08)" />
-      <path d="M140 635C320 500 450 470 620 520C740 556 890 560 1060 465" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="16" stroke-linecap="round" />
-      <text x="80" y="165" fill="#ffffff" font-size="78" font-weight="700" font-family="Arial, Helvetica, sans-serif">OmegaField</text>
-      <text x="80" y="250" fill="#ffffff" font-size="44" font-weight="600" font-family="Arial, Helvetica, sans-serif">${title}</text>
+      <rect width="1200" height="800" fill="url(#bg)" />
+      <circle cx="940" cy="130" r="85" fill="#ffffff" opacity="0.09" />
+      <g stroke="#ffffff" fill="none" opacity="0.24">
+        <path d="M-60 450 Q600 80 1260 450" stroke-width="18" />
+        <path d="M-60 485 Q600 140 1260 485" stroke-width="12" />
+        <path d="M-60 515 Q600 200 1260 515" stroke-width="8" />
+        <path d="M110 320 L90 60 M1090 320 L1110 60" stroke-width="12" />
+      </g>
+      <g fill="#ffffff" opacity="0.4">
+        <rect x="45" y="60" width="100" height="24" rx="4" />
+        <rect x="1060" y="60" width="100" height="24" rx="4" />
+      </g>
+      <ellipse cx="600" cy="660" rx="580" ry="235" fill="#14532d" opacity="0.7" />
+      <ellipse cx="600" cy="660" rx="490" ry="170" fill="none" stroke="#ffffff" stroke-width="4" opacity="0.4" />
+      <g transform="translate(600 565) skewX(-20) scale(1 0.7)" stroke="#ffffff" fill="none" stroke-width="4" opacity="0.45">
+        <rect x="-330" y="-65" width="660" height="255" />
+        <path d="M0 -65 V190 M-330 -15 H-240 V140 H-330 M330 -15 H240 V140 H330" />
+        <circle cy="62" r="50" />
+      </g>
     </svg>
   `;
 
@@ -153,3 +166,29 @@ export const fallbackNewsArticles: NewsArticle[] = [
     featured: true,
   },
 ];
+
+// Additional sample coverage for the five Phase 1 sports desks.
+const phaseOneStories = [
+  { id: "news-11", category: "Cricket", title: "Sri Lanka prepares for a testing tour with a renewed focus on spin", excerpt: "The training squad is building longer spells and sharper close catching into its preparation.", content: "The latest training block has placed spin bowling and close catching at the centre of tour preparation. Coaches are using extended practice sessions to help the squad adapt to changing conditions.\n\nSelectors are expected to assess both experience and recent domestic form before settling on the travelling group. The emphasis remains on a balanced attack and partnerships that can withstand pressure.", imageLabel: "Cricket preparations" },
+  { id: "news-12", category: "Rugby", title: "Club rugby enters the final stretch with everything still to play for", excerpt: "A closely contested table puts discipline and squad depth at the centre of the run-in.", content: "The closing weeks of the club season promise a series of competitive fixtures as several sides remain in contention. Coaches have highlighted discipline at the breakdown and accurate kicking as key priorities.\n\nSquad rotation is also coming into focus. With recovery time limited between matches, the teams that manage their resources well could gain an advantage.", imageLabel: "Club rugby" },
+  { id: "news-13", category: "Rugby", title: "School rugby captains look ahead to a season of renewed rivalries", excerpt: "Young leaders are setting the tone with an emphasis on teamwork and steady preparation.", content: "School rugby programmes are returning to structured training as captains prepare to lead a new generation of players. Early sessions have concentrated on passing accuracy, communication and defensive organisation.\n\nCoaches say player development will remain a priority alongside results. Supporters can expect familiar rivalries to provide a lively backdrop to the season.", imageLabel: "School rugby" },
+  { id: "news-14", category: "Rugby", title: "A stronger set piece gives the national rugby squad a platform to build on", excerpt: "Technical work in the scrum and lineout is shaping the next phase of preparation.", content: "The national rugby training group has devoted extra time to the set piece. The aim is to provide a reliable platform from which the backs can create space.\n\nThe coaching staff is combining technical drills with match scenarios, giving newer players the chance to learn alongside experienced members of the squad.", imageLabel: "Rugby training" },
+  { id: "news-15", category: "Cricket", title: "Domestic cricket gives emerging batters a chance to make their case", excerpt: "Consistent performances across longer innings are drawing attention from selectors.", content: "Emerging batters are making the most of the domestic calendar, with patient innings and sound decision making drawing attention. Coaches have encouraged players to focus on repeatable skills rather than individual highlights.\n\nThe competition offers valuable exposure to different bowling attacks. For younger players, building partnerships remains an important part of the learning process.", imageLabel: "Domestic cricket" },
+  { id: "news-16", category: "Football", title: "Youth football academies put player development at the heart of the new season", excerpt: "Smaller training groups and more time on the ball are helping young players build confidence.", content: "Youth academies are reviewing their training programmes to give players more opportunities to make decisions with the ball. Sessions are blending technical work with small-sided games.\n\nCoaches are also encouraging families to support gradual development. A consistent environment can help young players enjoy the game and stay involved for longer.", imageLabel: "Youth football" },
+  { id: "news-17", category: "Athletics", title: "Distance runners embrace a measured approach ahead of the road season", excerpt: "Training groups are balancing endurance work with recovery and strength sessions.", content: "Distance runners are building toward the road season with a focus on sustainable training. Coaches are combining steady mileage with strength work and carefully planned rest.\n\nCommunity events will give newer runners opportunities to compete alongside established athletes. Organisers hope the calendar will encourage participation across a broad range of abilities.", imageLabel: "Distance running" },
+  { id: "news-18", category: "Other Sports", title: "Young swimmers find their rhythm at the regional development meet", excerpt: "A new generation gains experience in the pool while coaches track progress beyond the podium.", content: "A regional swimming meet is giving young athletes the chance to put training into practice. Coaches are looking at technique, consistency and confidence alongside finishing positions.\n\nThe event forms part of a wider development programme designed to provide regular competition. Families and local clubs are helping make participation more accessible.", imageLabel: "Swimming" },
+  { id: "news-19", category: "Cricket", title: "Women’s cricket builds momentum through a wider domestic programme", excerpt: "More fixtures offer developing players valuable time in competitive conditions.", content: "An expanded domestic programme is creating more opportunities for women cricketers to gain match experience. Clubs are concentrating on consistent training and stronger pathways for new players.\n\nCoaches say the additional fixtures can support both skill development and confidence, with partnerships between schools and clubs playing an important role.", imageLabel: "Women’s cricket" },
+  { id: "news-20", category: "Rugby", title: "Community rugby puts the next generation at the centre of its plans", excerpt: "Introductory sessions are opening the game to young players across more local clubs.", content: "Community clubs are welcoming new players through introductory rugby sessions focused on safe technique and teamwork. Volunteer coaches are helping families understand the pathways available.\n\nThe programme places enjoyment and participation first. Organisers hope a positive first experience will encourage young players to stay involved in sport.", imageLabel: "Community rugby" },
+];
+
+fallbackNewsArticles.push(...phaseOneStories.map((story, index): NewsArticle => ({
+  id: story.id,
+  title: story.title,
+  shortDescription: story.excerpt,
+  content: story.content,
+  image: createMockImage(story.imageLabel, "#0f172a", ["#b91c1c", "#92400e", "#14532d"][index % 3]),
+  category: story.category,
+  author: "OmegaField Sports Desk",
+  publishedDate: `2026-10-${String(10 - Math.floor(index / 3)).padStart(2, "0")}T${String(15 - index).padStart(2, "0")}:00:00.000Z`,
+  featured: index < 4,
+})));

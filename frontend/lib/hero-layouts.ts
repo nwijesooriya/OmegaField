@@ -11,9 +11,10 @@ type HeroPresetItem = {
 
 const heroLayoutPresets: Record<HeroLayoutName, HeroPresetItem[]> = {
   layoutA: [
-    { index: 0, variant: "featured", className: "lg:col-span-2 lg:row-span-2" },
-    { index: 1, variant: "stacked", className: "lg:col-span-2" },
-    { index: 2, variant: "stacked", className: "lg:col-span-2" },
+    { index: 0, variant: "featured", className: "md:col-span-2" },
+    { index: 1, variant: "stacked", className: "" },
+    { index: 2, variant: "stacked", className: "" },
+    { index: 3, variant: "stacked", className: "md:col-span-2" },
   ],
   layoutB: [
     { index: 1, variant: "compact", className: "lg:col-span-1" },

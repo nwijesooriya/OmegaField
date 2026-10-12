@@ -2,11 +2,11 @@ import { CategoriesApiResponse, NewsApiResponse } from "@/types/news";
 import { fallbackNewsArticles } from "@/lib/mock-news";
 
 const backendBaseUrl =
-  process.env.BACKEND_API_URL ?? process.env.NEXT_PUBLIC_BACKEND_API_URL ?? "http://localhost:4000";
+  process.env.BACKEND_API_URL ?? process.env.NEXT_PUBLIC_API_URL ?? process.env.NEXT_PUBLIC_BACKEND_API_URL ?? "http://localhost:4000";
 
 async function fetchJson<T>(path: string): Promise<T> {
   try {
-    const response = await fetch(`${backendBaseUrl}${path}`, {
+    const response = await fetch(`${backendBaseUrl.replace(/\/$/, "")}${path}`, {
       cache: "no-store",
     });
 
