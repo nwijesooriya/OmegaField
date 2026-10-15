@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { isAxiosError } from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Mail, User as UserIcon, Calendar } from "lucide-react";
@@ -82,9 +83,9 @@ export default function SignupPage() {
       setTimeout(() => {
         router.push("/login");
       }, 1000);
-    } catch (err: any) {
+    } catch (err: unknown) {
       const message =
-        err?.response?.data?.error || "Registration failed. Please try again.";
+        (isAxiosError<{ error: string }>(err) && err.response?.data?.error) || "Registration failed. Please try again.";
       setGlobalError(message);
     } finally {
       setLoading(false);

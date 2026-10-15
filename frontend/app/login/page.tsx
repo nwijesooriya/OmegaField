@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { isAxiosError } from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Mail } from "lucide-react";
@@ -38,9 +39,9 @@ export default function LoginPage() {
       setTimeout(() => {
         router.push("/profile");
       }, 500);
-    } catch (err: any) {
+    } catch (err: unknown) {
       const message =
-        err?.response?.data?.error || "Invalid email or password.";
+        (isAxiosError<{ error: string }>(err) && err.response?.data?.error) || "Invalid email or password.";
       setError(message);
     } finally {
       setLoading(false);
@@ -53,7 +54,7 @@ export default function LoginPage() {
         title="Welcome Back"
         subtitle={
           <>
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link href="/register" className="font-semibold text-blue-600 hover:text-blue-500 transition-colors">
               Register
             </Link>

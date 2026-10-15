@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+import { articleHref, categoryFor, formatDate } from "@/lib/categories";
 
 import { cn } from "@/lib/utils";
 import type { NewsArticle } from "@/types/news";
@@ -10,9 +12,10 @@ type NewsCardProps = {
 
 export function NewsCard({ article, className }: NewsCardProps) {
   return (
-    <article
+    <Link
+      href={articleHref(article)}
       className={cn(
-        "group overflow-hidden rounded-[1.5rem] border border-white/70 bg-white/88 shadow-[0_20px_60px_rgba(15,23,42,0.08)] backdrop-blur transition hover:-translate-y-1 hover:shadow-[0_26px_70px_rgba(15,23,42,0.12)]",
+        "group block overflow-hidden rounded-lg border border-slate-200 bg-white transition-colors hover:border-slate-400",
         className,
       )}
     >
@@ -27,23 +30,20 @@ export function NewsCard({ article, className }: NewsCardProps) {
         />
       </div>
 
-      <div className="space-y-3 p-5">
+      <div className="space-y-3 p-4">
         <div className="flex items-center justify-between gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">
-          <span className="rounded-full bg-slate-950 px-3 py-1 text-white">{article.category}</span>
+          <span className="font-bold text-red-700">{categoryFor(article).name}</span>
           <time dateTime={article.publishedDate}>
-            {new Intl.DateTimeFormat("en", {
-              month: "short",
-              day: "numeric",
-              year: "numeric",
-            }).format(new Date(article.publishedDate))}
+            {formatDate(article.publishedDate)}
           </time>
         </div>
 
-        <h3 className="text-lg font-semibold leading-snug text-slate-950">
+        <h3 className="text-lg font-bold leading-snug text-slate-950 group-hover:text-red-700">
           {article.title}
         </h3>
         <p className="text-sm leading-6 text-slate-600">{article.shortDescription}</p>
+        <p className="text-xs text-slate-500">By {article.author}</p>
       </div>
-    </article>
+    </Link>
   );
 }

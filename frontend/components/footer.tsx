@@ -1,58 +1,15 @@
+import Link from "next/link";
+import { categories } from "@/lib/categories";
 import { Container } from "./container";
 
 export function Footer() {
-  return (
-    <footer className="mt-12 border-t border-slate-200/80 bg-slate-950 text-white">
-      <Container className="grid gap-10 py-10 md:grid-cols-2 lg:grid-cols-4">
-        <div className="space-y-3">
-          <p className="text-sm font-semibold uppercase tracking-[0.28em] text-red-200">
-            OmegaField
-          </p>
-          <p className="max-w-sm text-sm leading-6 text-white/70">
-            A sports news foundation designed to scale into a production editorial experience.
-          </p>
-        </div>
-
-        <div className="space-y-3 text-sm text-white/75">
-          <p className="font-semibold text-white">About</p>
-          <a href="#" className="block transition hover:text-white">
-            Our Story
-          </a>
-          <a href="#" className="block transition hover:text-white">
-            Editorial Standards
-          </a>
-        </div>
-
-        <div className="space-y-3 text-sm text-white/75">
-          <p className="font-semibold text-white">Contact</p>
-          <a href="#" className="block transition hover:text-white">
-            Email Us
-          </a>
-          <a href="#" className="block transition hover:text-white">
-            Advertising
-          </a>
-        </div>
-
-        <div className="space-y-3 text-sm text-white/75">
-          <p className="font-semibold text-white">Social Media</p>
-          <a href="#" className="block transition hover:text-white">
-            X / Twitter
-          </a>
-          <a href="#" className="block transition hover:text-white">
-            Instagram
-          </a>
-          <a href="#" className="block transition hover:text-white">
-            YouTube
-          </a>
-          <a href="#" className="block transition hover:text-white">
-            LinkedIn
-          </a>
-        </div>
-      </Container>
-
-      <div className="border-t border-white/10 py-4 text-center text-xs uppercase tracking-[0.24em] text-white/45">
-        Privacy Policy
-      </div>
-    </footer>
-  );
+  return <footer className="mt-12 border-t border-slate-800 bg-slate-950 text-white">
+    <Container className="grid gap-8 py-9 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr]">
+      <div><Link href="/" className="text-xl font-bold">OmegaField<span className="text-red-500">.</span></Link><p className="mt-3 max-w-sm text-sm leading-6 text-slate-400">The stories behind the sport. From local grounds to the international stage.</p></div>
+      <div><h2 className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-300">Sports</h2><div className="space-y-2">{categories.map((category) => <Link key={category.slug} href={"/" + category.slug} className="block text-sm text-slate-400 hover:text-white">{category.name}</Link>)}</div></div>
+      <div><h2 className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-300">OmegaField</h2><div className="space-y-2">{["About", "Contact", "Privacy", "Terms"].map((item) => <Link key={item} href={"/" + item.toLowerCase()} className="block text-sm text-slate-400 hover:text-white">{item}</Link>)}</div></div>
+      <div><h2 className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-300">Follow the story</h2><p className="text-sm leading-6 text-slate-400">Our official social channels will be announced here.</p><Link href="/search" className="mt-3 inline-block text-sm text-white hover:underline">Explore the news →</Link></div>
+    </Container>
+    <Container className="border-t border-white/10 py-4 text-xs text-slate-400">© {new Intl.DateTimeFormat("en", { year: "numeric", timeZone: "Asia/Colombo" }).format(new Date())} OmegaField. All rights reserved.</Container>
+  </footer>;
 }

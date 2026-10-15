@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "OmegaField Sports News",
-  description: "A modern sports news portal powered by mock backend data.",
+  description: "The stories behind the sport. Cricket, football, rugby, athletics and more from OmegaField.",
 };
 
 export default function RootLayout({

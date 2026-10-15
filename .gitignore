@@ -9,6 +9,9 @@ frontend/coverage/
 frontend/.vercel/
 frontend/*.log
 frontend/*.tsbuildinfo
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
 backend/*.log
 backend/dist/
 backend/build/

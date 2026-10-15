@@ -1,25 +1,20 @@
-import { Container } from "./container";
+"use client";
 
-type NavbarProps = {
-  items: string[];
-};
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { categories } from "@/lib/categories";
+import { cn } from "@/lib/utils";
 
-export function Navbar({ items }: NavbarProps) {
+export function Navbar({ onNavigate }: { onNavigate?: () => void }) {
+  const pathname = usePathname();
   return (
-    <div className="sticky top-0 z-20 border-b border-slate-200/70 bg-slate-950/95 text-white shadow-[0_10px_30px_rgba(15,23,42,0.12)] backdrop-blur">
-      <Container>
-        <nav className="flex items-center gap-2 overflow-x-auto py-3 text-sm font-medium sm:gap-3">
-          {items.map((item) => (
-            <a
-              key={item}
-              href="#"
-              className="whitespace-nowrap rounded-full px-4 py-2 text-slate-200 transition hover:bg-white/10 hover:text-white"
-            >
-              {item}
-            </a>
-          ))}
-        </nav>
-      </Container>
-    </div>
+    <nav aria-label="Primary navigation" className="flex flex-col gap-1 xl:flex-row xl:items-center">
+      {[{ name: "Home", slug: "" }, ...categories].map((item) => {
+        const href = "/" + item.slug;
+        const active = pathname === href;
+        return <Link key={href} href={href} onClick={onNavigate} aria-current={active ? "page" : undefined}
+          className={cn("whitespace-nowrap rounded-md px-3 py-2.5 text-sm font-semibold transition-colors", active ? "bg-red-50 text-red-700" : "text-slate-600 hover:bg-slate-100 hover:text-slate-950")}>{item.name}</Link>;
+      })}
+    </nav>
   );
 }

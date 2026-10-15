@@ -4,11 +4,21 @@ import { useEffect, useState } from "react";
 import { ProtectedRoute } from "../../../components/auth/ProtectedRoute";
 import { Users, FileText, MessageSquare, Tag } from "lucide-react";
 import api from "../../../services/api";
+import { useAuth } from "../../../hooks/useAuth";
+
+interface AdminStats {
+  totalArticles: number;
+  totalUsers: number;
+  pendingComments: number;
+  categories: number;
+}
 
 export default function AdminDashboardPage() {
-  const [stats, setStats] = useState<any>(null);
+  const { user, loading } = useAuth();
+  const [stats, setStats] = useState<AdminStats | null>(null);
 
   useEffect(() => {
+    if (loading || user?.role !== "ADMIN") return;
     const fetchStats = async () => {
       try {
         const res = await api.get("/admin/dashboard");
@@ -18,7 +28,7 @@ export default function AdminDashboardPage() {
       }
     };
     fetchStats();
-  }, []);
+  }, [loading, user]);
 
   return (
     <ProtectedRoute allowedRoles={["ADMIN"]}>
