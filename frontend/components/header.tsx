@@ -1,108 +1,62 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { LogOut, Menu, Search, X } from "lucide-react";
 import { Container } from "./container";
-import { useAuth } from "../hooks/useAuth";
-import { LogOut, User as UserIcon } from "lucide-react";
-
-function SearchIcon() {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      className="h-5 w-5"
-    >
-      <path d="M21 21l-4.3-4.3" strokeLinecap="round" />
-      <circle cx="10.5" cy="10.5" r="6.5" />
-    </svg>
-  );
-}
+import { Navbar } from "./navbar";
+import { useAuth } from "@/hooks/useAuth";
 
 export function Header() {
-  const { user, logout } = useAuth();
+  const { user, loading, logout } = useAuth();
+  const [openPath, setOpenPath] = useState<string | null>(null);
+  const pathname = usePathname();
+  const mobileOpen = openPath === pathname;
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
-  return (
-    <header className="relative z-10 border-b border-white/70 bg-white/80 shadow-[0_10px_40px_rgba(15,23,42,0.04)] backdrop-blur-xl">
-      <Container className="flex items-center justify-between gap-4 py-4">
-        <div className="flex items-center gap-3">
-          <Link href="/">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-slate-950 via-red-700 to-amber-500 text-sm font-semibold text-white shadow-lg shadow-red-950/20">
-              OF
-            </div>
-          </Link>
-          <Link href="/">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
-                Sports news
-              </p>
-              <p className="text-lg font-semibold text-slate-950">OmegaField</p>
-            </div>
-          </Link>
-        </div>
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpenPath(null);
+        toggleRef.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [mobileOpen]);
 
-        <div className="flex items-center gap-2 sm:gap-3">
-          <button
-            type="button"
-            aria-label="Search"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
-          >
-            <SearchIcon />
-          </button>
-          
-          {!user ? (
-            <>
-              <Link
-                href="/login"
-                className="hidden rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 sm:inline-flex"
-              >
-                Login
-              </Link>
-              <Link
-                href="/register"
-                className="rounded-full bg-slate-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
-              >
-                Register
-              </Link>
-            </>
-          ) : (
-            <>
-              {user.role === "ADMIN" && (
-                <Link
-                  href="/admin/dashboard"
-                  className="hidden rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-red-700 transition hover:border-slate-300 hover:bg-red-50 sm:inline-flex"
-                >
-                  Admin Dashboard
-                </Link>
-              )}
-              
-              <Link
-                href="/user/dashboard"
-                className="hidden rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 sm:inline-flex"
-              >
-                User Dashboard
-              </Link>
+  const accountLinks = loading ? <span className="text-xs text-slate-500">Loading account…</span> : !user ? <>
+    <Link href="/login" className="px-2 py-2 text-sm font-semibold text-slate-700 hover:text-red-700">Login</Link>
+    <Link href="/register" className="rounded-md bg-slate-950 px-3 py-2 text-sm font-semibold text-white hover:bg-red-700">Register</Link>
+  </> : <details className="relative">
+    <summary className="max-w-36 cursor-pointer truncate rounded-md border border-slate-200 px-3 py-2 text-sm font-semibold">{user.username}</summary>
+    <div className="absolute right-0 z-40 mt-2 w-52 rounded-lg border border-slate-200 bg-white p-2 shadow-lg">
+      <Link href="/profile" className="block rounded px-3 py-2 text-sm hover:bg-slate-50">My profile</Link>
+      <Link href="/user/dashboard" className="block rounded px-3 py-2 text-sm hover:bg-slate-50">User dashboard</Link>
+      {user.role === "ADMIN" && <Link href="/admin/dashboard" className="block rounded px-3 py-2 text-sm text-red-700 hover:bg-red-50">Admin dashboard</Link>}
+      <button onClick={() => void logout()} className="flex w-full items-center gap-2 rounded px-3 py-2 text-sm text-red-700 hover:bg-red-50"><LogOut size={15} aria-hidden="true" /> Log out</button>
+    </div>
+  </details>;
 
-              <Link
-                href="/profile"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
-              >
-                <UserIcon size={18} />
-              </Link>
-
-              <button
-                onClick={logout}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-red-50 text-red-600 transition hover:bg-red-100"
-                title="Logout"
-              >
-                <LogOut size={18} />
-              </button>
-            </>
-          )}
-        </div>
-      </Container>
-    </header>
-  );
+  return <header className="relative z-30 border-b border-slate-200 bg-white">
+    <Container className="flex min-h-20 items-center justify-between gap-4 py-3">
+      <Link href="/" aria-label="OmegaField home" className="flex shrink-0 items-center gap-3">
+        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-slate-950 via-red-700 to-amber-500 text-sm font-bold text-white">OF</span>
+        <span><span className="block text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500">Sports news</span><span className="block text-lg font-bold tracking-tight">OmegaField</span></span>
+      </Link>
+      <div className="hidden xl:block"><Navbar /></div>
+      <div className="flex items-center gap-2">
+        <Link href="/search" aria-label="Search news" className="rounded-md p-2.5 text-slate-600 hover:bg-slate-100"><Search size={20} aria-hidden="true" /></Link>
+        <div className="hidden items-center gap-2 md:flex">{accountLinks}</div>
+        <button ref={toggleRef} type="button" aria-expanded={mobileOpen} aria-controls="mobile-navigation" aria-label={mobileOpen ? "Close menu" : "Open menu"} onClick={() => setOpenPath(mobileOpen ? null : pathname)} className="rounded-md p-2.5 hover:bg-slate-100 xl:hidden">
+          {mobileOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
+        </button>
+      </div>
+    </Container>
+    <div id="mobile-navigation" hidden={!mobileOpen} className="border-t border-slate-100 bg-white xl:hidden">
+      <Container className="py-4"><Navbar onNavigate={() => setOpenPath(null)} /><div className="mt-3 flex items-center gap-3 border-t border-slate-100 pt-4 md:hidden">{accountLinks}</div></Container>
+    </div>
+  </header>;
 }

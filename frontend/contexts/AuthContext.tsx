@@ -1,14 +1,14 @@
 "use client";
 
 import React, { createContext, useState, useEffect, ReactNode } from "react";
-import { User } from "../types/auth";
+import { User, LoginRequest, SignupRequest } from "../types/auth";
 import { authService } from "../services/auth.service";
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  login: (data: any) => Promise<void>;
-  signup: (data: any) => Promise<void>;
+  login: (data: LoginRequest) => Promise<void>;
+  signup: (data: SignupRequest) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -36,13 +36,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     fetchUser();
   }, []);
 
-  const login = async (data: any) => {
+  const login = async (data: LoginRequest) => {
     const response = await authService.login(data);
     localStorage.setItem("token", response.token);
     setUser(response.user);
   };
 
-  const signup = async (data: any) => {
+  const signup = async (data: SignupRequest) => {
     await authService.signup(data);
   };
 

@@ -6,11 +6,18 @@ import { Bookmark, MessageCircle } from "lucide-react";
 import api from "../../../services/api";
 import { useAuth } from "../../../hooks/useAuth";
 
+interface UserDashboardData {
+  message: string;
+  savedArticlesCount: number;
+  commentHistoryCount: number;
+}
+
 export default function UserDashboardPage() {
-  const { user } = useAuth();
-  const [data, setData] = useState<any>(null);
+  const { user, loading } = useAuth();
+  const [data, setData] = useState<UserDashboardData | null>(null);
 
   useEffect(() => {
+    if (loading || !user) return;
     const fetchData = async () => {
       try {
         const res = await api.get("/user/dashboard");
@@ -20,7 +27,7 @@ export default function UserDashboardPage() {
       }
     };
     fetchData();
-  }, []);
+  }, [loading, user]);
 
   return (
     <ProtectedRoute allowedRoles={["USER", "ADMIN"]}>

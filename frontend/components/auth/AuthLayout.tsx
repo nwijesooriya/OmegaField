@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 interface AuthLayoutProps {
   children: React.ReactNode;
@@ -14,7 +15,10 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
       {/* Illustration Side (hidden on mobile) */}
       <div className="hidden lg:block relative w-0 flex-1 bg-blue-900">
         <div className="absolute inset-0 h-full w-full object-cover">
-           <img
+           <Image
+            fill
+            sizes="50vw"
+            unoptimized
             className="absolute inset-0 h-full w-full object-cover opacity-60 mix-blend-overlay"
             src={illustrationSrc}
             alt="Sports stadium background"
